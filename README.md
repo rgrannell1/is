@@ -7,7 +7,7 @@ type of a value in a way more reliable than `typeof`.
 
 ```js
 Object.prototype.toString.call(val)
-``
+```
 
 ## Installation
 
