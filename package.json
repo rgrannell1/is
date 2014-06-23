@@ -1,0 +1,15 @@
+{
+	"name":
+		"is",
+	"version":
+		"0.1.0",
+	"description":
+		"A shallow wrapper for Object.prototype.toString.call( )",
+	"scripts": {
+		"test":
+			"node test/all.js"
+	},
+	"devDependencies": {
+		"test": ">=0.0.5"
+	}
+}
