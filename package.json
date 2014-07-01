@@ -13,5 +13,5 @@
 		"type": "git",
 		"url" : "git://github.com/rgrannell1/is.git"
 	},
-	"main": "main.js"
+	"main": "is.js"
 }
