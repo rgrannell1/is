@@ -3,8 +3,6 @@ const is = require('../lib/is.js')
 
 
 
-
-
 console.assert(is.string(''))
 console.assert(is.string('string'))
 console.assert(is.a('string', 'string'))
