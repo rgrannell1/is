@@ -1,5 +1,5 @@
 
-is v0.1.0
+is v0.2.0
 ====================
 
 Is.js wraps the following useful but cryptic one-liner for finding out the
