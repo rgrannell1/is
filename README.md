@@ -23,12 +23,18 @@ Is.js is both a node.js and a web-JavaScript library.
 ```js
 const is = require('is')
 
-is.string(val)
-is.number(val)
+is.a(str, val)
+
+is.array(val)
+is.boolean(val)
+is.date(val)
 is.function(val)
-is.undefined(val)
 is.null(val)
+is.number(val)
 is.object(val)
+is.regexp(val)
+is.string(val)
+is.undefined(val)
 ```
 
 ## License
