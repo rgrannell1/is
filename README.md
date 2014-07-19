@@ -1,5 +1,5 @@
 
-is v0.2.0
+is v0.1.0
 ====================
 
 Is.js wraps the following useful but cryptic one-liner for finding out the
@@ -23,18 +23,21 @@ Is.js is both a node.js and a web-JavaScript library.
 ```js
 const is = require('is')
 
-is.a(str, val)
+is.a         :: string x any -> boolean
+is.what      :: any -> string
 
-is.array(val)
-is.boolean(val)
-is.date(val)
-is.function(val)
-is.null(val)
-is.number(val)
-is.object(val)
-is.regexp(val)
-is.string(val)
-is.undefined(val)
+is.array     :: any -> boolean
+is.boolean   :: any -> boolean
+is.date      :: any -> boolean
+is.error     :: any -> boolean
+is.function  :: any -> boolean
+is.null      :: any -> boolean
+is.number    :: any -> boolean
+is.object    :: any -> boolean
+is.regexp    :: any -> boolean
+is.string    :: any -> boolean
+is.undefined :: any -> boolean
+
 ```
 
 ## License
