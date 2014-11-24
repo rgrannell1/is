@@ -2,7 +2,7 @@
 	"name":
 		"is",
 	"version":
-		"0.1.0",
+		"1.0.0",
 	"description":
 		"A shallow wrapper for Object.prototype.toString.call( )",
 	"scripts": {
