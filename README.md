@@ -1,5 +1,5 @@
 
-is v1.0.0
+is v2.0.0
 ====================
 
 Is.js wraps the following useful but cryptic one-liner for finding out the
@@ -23,20 +23,35 @@ Is.js is both a node.js and a web-JavaScript library.
 ```js
 const is = require('is')
 
+is           :: string x any -> boolean
 is.a         :: string x any -> boolean
 is.what      :: any -> string
 
-is.array     :: any -> boolean
-is.boolean   :: any -> boolean
-is.date      :: any -> boolean
-is.error     :: any -> boolean
-is.function  :: any -> boolean
-is.null      :: any -> boolean
-is.number    :: any -> boolean
-is.object    :: any -> boolean
-is.regexp    :: any -> boolean
-is.string    :: any -> boolean
-is.undefined :: any -> boolean
+is.array            :: any -> boolean
+is.boolean          :: any -> boolean
+is.date             :: any -> boolean
+is.error            :: any -> boolean
+is.function         :: any -> boolean
+is.null             :: any -> boolean
+is.number           :: any -> boolean
+is.object           :: any -> boolean
+is.regexp           :: any -> boolean
+is.string           :: any -> boolean
+is.undefined        :: any -> boolean
+
+is.always           :: string x any -> undefined
+
+is.always.array     :: string x any -> undefined
+is.always.boolean   :: string x any -> undefined
+is.always.date      :: string x any -> undefined
+is.always.error     :: string x any -> undefined
+is.always.function  :: string x any -> undefined
+is.always.null      :: string x any -> undefined
+is.always.number    :: string x any -> undefined
+is.always.object    :: string x any -> undefined
+is.always.regexp    :: string x any -> undefined
+is.always.string    :: string x any -> undefined
+is.always.undefined :: string x any -> undefined
 
 ```
 

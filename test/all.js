@@ -24,3 +24,73 @@ console.assert(is.null(null))
 
 console.assert( is.object({}) )
 console.assert( is.object({a: 1, b:2}) )
+
+// 2.0.0
+console.assert(is('string', 'me'))
+
+is.always('number', NaN)
+is.always.number(NaN)
+is.always.undefined(undefined)
+
+is.never('string', 0)
+is.never.string(false)
+is.never.undefined('')
+
+
+
+
+;( function () {
+
+	var errored;
+
+	try {
+		is.always('number', 'not a number')
+	} catch (err) {
+		errored = true
+	}
+
+	console.assert(errored === true)
+
+} )()
+
+;( function () {
+
+	var errored;
+
+	try {
+		is.always.number('not a number')
+	} catch (err) {
+		errored = true
+	}
+
+	console.assert(errored === true)
+
+} )()
+
+;( function () {
+
+	var errored;
+
+	try {
+		is.never('number', NaN)
+	} catch (err) {
+		errored = true
+	}
+
+	console.assert(errored === true)
+
+} )()
+
+;( function () {
+
+	var errored;
+
+	try {
+		is.never.number(NaN)
+	} catch (err) {
+		errored = true
+	}
+
+	console.assert(errored === true)
+
+} )()
