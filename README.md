@@ -1,5 +1,5 @@
 
-is v3.0.0
+is v3.1.0
 ====================
 
 Is.js wraps the following useful but cryptic one-liner for finding out the
@@ -31,6 +31,7 @@ is.boolean   :: any -> boolean
 is.date      :: any -> boolean
 is.error     :: any -> boolean
 is.function  :: any -> boolean
+is.location  :: any -> boolean
 is.null      :: any -> boolean
 is.number    :: any -> boolean
 is.object    :: any -> boolean
