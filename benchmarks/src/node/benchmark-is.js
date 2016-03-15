@@ -53,7 +53,7 @@ const pairSuite = (name, test0, test1) => {
 			name:      event.currentTarget.name,
 			mean:      event.currentTarget.mean,
 			deviation: event.currentTarget.deviation,
-			hertz:     hertz < 100 ? 2 : 0,
+			hertz:     hertz,
 			rme:       event.currentTarget.stats.rme
 
 		}) )

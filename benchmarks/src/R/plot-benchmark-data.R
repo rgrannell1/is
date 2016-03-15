@@ -32,83 +32,57 @@ if (!require(ggplot2)) {
 
 
 
-stdin <- file('stdin')
+readStdin <- function ( ) {
 
-open(stdin)
+	stdin <- file('stdin')
 
+	open(stdin)
 
+	lines <- list( )
 
+	while (length(line <- readLines(stdin, n = 1)) > 0) {
+		lines <- xJoin_( lines, list(line))
+	}
 
+	lines
 
-benchmarks <- list( )
-
-#while (length(line <- readLines(stdin, n = 1)) > 0) {
-#	benchmarks <- xJoin_( benchmarks, list(fromJSON(line)) )
-#}
-
-
-
-benchmarks = list(
-
-	list(
-		id        = 0,
-		name      = 'foo',
-		mean      = 10,
-		deviation = 2,
-		hertz     = 100,
-		rme       = 5
-	),
-	list(
-		id        = 1,
-		name      = 'foo',
-		mean      = 10,
-		deviation = 2,
-		hertz     = 100,
-		rme       = 5
-	),
-	list(
-		id        = 0,
-		name      = 'baz',
-		mean      = 10,
-		deviation = 2,
-		hertz     = 100,
-		rme       = 5
-	),
-	list(
-		id        = 0,
-		name      = 'baz',
-		mean      = 10,
-		deviation = 2,
-		hertz     = 100,
-		rme       = 5
-	)
-
-)
+}
 
 
 
 
-
-groupedBenchmarks <- x_(benchmarks) $ xGroupBy(xAtKey('id')) $ x_Map(group := {
-	list(
-		xFirstOf(group),
-		xGroupBy(xAtKey('name'), xSecondOf(group)))
-})
-
-
-
-
-x_(groupedBenchmarks) $ xMap(benchmark := {
-
-	id           <- xFirstOf(benchmark)
-	observations <- xSecondOf(benchmark)
-
-	x_(observations) $ x_Map(observation := {
-
-		data.frame(xSecondOf(observation))
-
+groupedBenchmarks <-
+	x_(readStdin( )) $
+	xMap(toJSON) $
+	xGroupBy(xAtKey('id')) $
+	x_Map(group := {
+		list(
+			xFirstOf(group),
+			xGroupBy(xAtKey('name'), xSecondOf(group)))
 	})
 
 
 
-})
+
+x_(groupedBenchmarks) $
+	xMap(benchmark := {
+
+		id           <- xFirstOf(benchmark)
+		time         <- as.numeric(Sys.time( ))
+		observations <- xSecondOf(benchmark)
+
+		data <-
+			x_(observations) $
+			xMap(observation := {
+
+				data.frame(xSecondOf(observation))
+
+			}) $
+			x_Apply(rbind)
+
+		ggplot(data) +
+		geom_bar( aes(x = name, y = mean, fill = factor(name)),  stat = "identity")
+
+		ggsave(file = paste0('benchmarks/images/', time, '-', id, '.png'))
+
+	})
