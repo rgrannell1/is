@@ -39,6 +39,7 @@ const pairSuite = (name, test0, test1) => {
 
 	const suite = new Benchmark.Suite(name)
 
+	const id        = Date.now( )
 	const reporters = { }
 
 	reporters.onCycle = event => {
@@ -47,11 +48,13 @@ const pairSuite = (name, test0, test1) => {
 
 		console.log( JSON.stringify({
 
+			id,
+
 			name:      event.currentTarget.name,
 			mean:      event.currentTarget.mean,
 			deviation: event.currentTarget.deviation,
-			hertz:     hertz.toFixed(hertz < 100 ? 2 : 0),
-			rme:       event.currentTarget.stats.rme.toFixed(2)
+			hertz:     hertz < 100 ? 2 : 0,
+			rme:       event.currentTarget.stats.rme
 
 		}) )
 

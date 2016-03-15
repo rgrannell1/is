@@ -16,7 +16,7 @@ node_benchmark ( ) {
 	then
 		node "$DIRNAME/../node/benchmark-is.js"
 	else
-		"$NVM_BIN/node" "$DIRNAME/../node/benchmark-is.js"
+		node "$DIRNAME/../node/benchmark-is.js"
 	fi
 
 }
@@ -29,4 +29,5 @@ plot_benchmark ( ) {
 
 
 
-node_benchmark | plot_benchmark
+#node_benchmark | plot_benchmark
+plot_benchmark
