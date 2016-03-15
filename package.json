@@ -1,17 +1,16 @@
 {
-	"name":
-		"is",
-	"version":
-		"3.1.0",
-	"description":
-		"A shallow wrapper for Object.prototype.toString.call( )",
-	"scripts": {
-		"test":
-			"node test/all.js"
-	},
-	"repository" : {
-		"type": "git",
-		"url" : "git://github.com/rgrannell1/is.git"
-	},
-	"main": "is.js"
+  "name": "is",
+  "version": "3.1.0",
+  "description": "A shallow wrapper for Object.prototype.toString.call( )",
+  "scripts": {
+    "test": "node test/all.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rgrannell1/is.git"
+  },
+  "main": "is.js",
+  "dependencies": {
+    "benchmark": "^2.1.0"
+  }
 }
