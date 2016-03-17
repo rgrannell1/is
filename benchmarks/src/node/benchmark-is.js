@@ -11,94 +11,42 @@ const is        = require('is')
 
 
 
-const types    = Object.keys(is.always)
-const testData = [
+const compareBenchmarks = function ( ) {
 
-	[1,2,3,4,5],
-	true,
-	new Date( ),
-	new Error('test-error.'),
-	function (x) {x},
-	null,
-	42,
-	{
-		x: 1,
-		y: 1
-	},
-	/foobar/g,
-	"test-string",
-	Symbol('shrimp'),
-	undefined
+	const suite = new Benchmark.Suite( )
 
-]
+	const args  = arguments.length === 1
+		? [arguments[0]]
+		: Array.apply(null, arguments)
 
+	args.forEach(testcase => {
+		suite.add(testcase.name, testcase.fn)
+	})
 
+	suite
+	.on('complete', function ( ) {
 
+		const slowest = this.filter('slowest')
+		const fastest = this.filter('fastest')
 
-const pairSuite = (name, test0, test1) => {
+		const formatted = {
+			slowest: {
+				hz: Number( Math.round(slowest.map('hz')) ).toLocaleString( )
+			},
+			fastest: {
+				hz: Number( Math.round(fastest.map('hz')) ).toLocaleString( )
+			}
+		}
 
-	const suite = new Benchmark.Suite(name)
-
-	const id        = Date.now( )
-	const reporters = { }
-
-	reporters.onCycle = event => {
-
-		const hertz = event.currentTarget.hz
-
-		console.log( JSON.stringify({
-
-			id,
-
-			name:      event.currentTarget.name,
-			mean:      event.currentTarget.mean,
-			deviation: event.currentTarget.deviation,
-			hertz:     hertz,
-			rme:       event.currentTarget.stats.rme
-
-		}) )
-
-	}
-
-	reporters.onComplete = ( ) => {
-
-	}
-
-	testData.forEach(testDatum => {
-
-		suite
-		.add(test0.name, test0.fn.bind({ }, testDatum), {
-			onCycle:    reporters.onCycle,
-			onComplete: reporters.onComplete
-		})
-		.add(test1.name, test1.fn.bind({ }, testDatum), {
-			onCycle:    reporters.onCycle,
-			onComplete: reporters.onComplete
-		})
+		console.log(`fastest: ${fastest.map('name')} ${formatted.fastest.hz}`)
+		console.log(`slowest: ${slowest.map('name')} ${formatted.slowest.hz}`)
+		console.log('')
 
 	})
 
 	suite.run({
 		async: true
 	})
-
-	return ( ) => {
-		return suite
-	}
-
-}
-
-
-
-
-
-const reporter = { }
-
-reporter.onCycle = event => {
-	console.log(event.target.toString( ))
-}
-
-reporter.onComplete = function ( ) {
 
 }
 
@@ -108,46 +56,187 @@ reporter.onComplete = function ( ) {
 
 const suites = { }
 
-suites.exports = ( ) => {
+{
 
-	const suite = new Benchmark.Suite( )
+	let data = [1,2,3,4,5]
 
-	types.forEach(type => {
+	suites.array = compareBenchmarks.bind({ }, {
 
-		testData.forEach(testDatum => {
+		name: 'Array.isArray',
+		fn:   ( ) => Array.isArray(data)
 
-			suite.add(`is.${type}`, ( ) => {
-				is[type](testData)
-			}, {
-				onCycle:    reporter.onCycle,
-				onComplete: reporter.onComplete
-			})
+	}, {
 
-		})
+		name: 'is.array',
+		fn:   ( ) => is.array(data)
 
 	})
 
-	suite.run({
-		async: true
+}
+
+{
+
+	let data = true
+
+	suites.boolean = compareBenchmarks.bind({ }, {
+
+		name: 'custom',
+		fn:   ( ) => data === true || data === false
+
+	}, {
+
+		name: 'is.boolean',
+		fn:   ( ) => is.boolean(data)
+
+	})
+
+
+}
+
+{
+
+	let data = new Date( )
+
+	suites.date = compareBenchmarks.bind({ }, {
+
+		name: 'is.date',
+		fn:   ( ) => is.date(data)
+
+	})
+
+
+}
+
+{
+
+	let data = new Error( )
+
+	suites.error = compareBenchmarks.bind({ }, {
+
+		name: 'is.error',
+		fn:   ( ) => is.error(data)
+
+	})
+
+
+}
+
+{
+
+	let data = function (x) {x}
+
+	suites.function = compareBenchmarks.bind({ }, {
+
+		name: 'is.function',
+		fn:   ( ) => is.function(data)
+
+	})
+
+
+}
+
+{
+
+	let data = null
+
+	suites.null = compareBenchmarks.bind({ }, {
+
+		name: 'is.null',
+		fn:   ( ) => is.null(data)
+
+	})
+
+}
+
+{
+
+	let data = 10
+
+	suites.number = compareBenchmarks.bind({ }, {
+
+		name: 'is.number',
+		fn:   ( ) => is.number(data)
+
+	})
+
+}
+
+{
+
+	let data = {x: 1}
+
+	suites.object = compareBenchmarks.bind({ }, {
+
+		name: 'is.object',
+		fn:   ( ) => is.object(data)
+
+	})
+
+}
+
+{
+
+	let data = /./g
+
+	suites.regexp = compareBenchmarks.bind({ }, {
+
+		name: 'is.regexp',
+		fn:   ( ) => is.regexp(data)
+
+	})
+
+}
+
+{
+
+	let data = "."
+
+	suites.string = compareBenchmarks.bind({ }, {
+
+		name: 'is.string',
+		fn:   ( ) => is.string(data)
+
+	})
+
+}
+
+{
+
+	let data = Symbol('x')
+
+	suites.symbol = compareBenchmarks.bind({ }, {
+
+		name: 'is.symbol',
+		fn:   ( ) => is.symbol(data)
+
+	})
+
+}
+
+{
+
+	let data = undefined
+
+	suites.undefined = compareBenchmarks.bind({ }, {
+
+		name: 'is.undefined',
+		fn:   ( ) => is.undefined(data)
+
 	})
 
 }
 
 
 
-
-
-suites.array = pairSuite('Array Benchmarks.', {
-	name: 'Array.isArray',
-	fn:   data => Array.isArray(data)
-}, {
-	name: 'is.array',
-	fn:   data => is.array(data)
-})
-
-
-
-
-
 suites.array( )
-//suites.exports( )
+suites.boolean( )
+suites.date( )
+suites.error( )
+suites.function( )
+suites.null( )
+suites.number( )
+suites.object( )
+suites.regexp( )
+suites.string( )
+suites.symbol( )
+suites.undefined( )

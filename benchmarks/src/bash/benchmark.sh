@@ -29,5 +29,4 @@ plot_benchmark ( ) {
 
 
 
-node_benchmark | plot_benchmark
-#plot_benchmark
+node_benchmark
